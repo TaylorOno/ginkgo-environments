@@ -6,13 +6,14 @@ Global configs should be placed in the `config-gobal.go` test file.  These are v
 Environment specific variables can should be placed in the appropriate `config-{env).go` test file.
 
 ## Helper Methods
-There are two helper methods designed to help you conditionally skip test `OnlyIn()` and `SkipIn()` these are Variadic that take 0 or more environments as argument. 
-Placing these in a test spec will cause a test to be only run in or be skipped in the specified environments.
+There are two helper methods designed to help you conditionally skip test `OnlyIn()` and `SkipIn()` these are variadic functions that take zero or more environments as argument.
+Placing these one of these methods at the beginning of your test will help you prevent potentially destructive tests running in the wrong environment.
+For Exampled `OnlyIn(LOCAL,DEV)` will cause a test to be skipped in PROD and STAGING.  Conversely `SkipIn(PROD, STAGING)` will have the same effect.
 
 ## Example execution
 ### Run Test Local
-this can be accomplished using the default ginkgo command as Local is the default profile
-```bash
+This can be accomplished using the default ginkgo command `ginkgo` as Local is the default profile
+```
 HOST=localhost:8443 ginkgo
 Running Suite: LOCAL Tests Suite
 ================================
@@ -31,8 +32,8 @@ PASS
 ```
 
 ### Run Test Dev
-this can be accomplished using the default ginkgo command as Local is the default profile
-```bash
+this can be accomplished passing `dev` as a tag for example `ginkgo --tags dev`
+```
 HOST=localhost:8443 ginkgo --tags dev
 Running Suite: DEV Tests Suite
 ==============================
@@ -67,12 +68,12 @@ PASS
 assuming env is the desired name of the new environment
 
 1) Create a new config_{env}.go file 
-  - update the build tag to match the file env
-  - updated any environment specific variables at the very least env={env}
+    - update the build tag to match the file env
+    - updated any environment specific variables at the very least env={env}
   
 2) Update the config_local.go file
-  - add !{env} to the list of excluded build tags
+    - add !{env} to the list of excluded build tags
   
 3) Updates the environment enum in suite_test.go
-  - add your {env} to the var block
-  - be careful to also create a simple name for the String Method.
+    - add your {env} to the var block
+    - be careful to also create a simple name for the String Method.
