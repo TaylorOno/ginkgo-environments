@@ -2,8 +2,8 @@
 This is a sample solution that will allow ginkgo tests to be easily run against different environments
 
 ## Getting Started
-Global configs should be placed in the `config-gobal.go` test file.  These are variables that can be shared across all environments.
-Environment specific variables can should be placed in the appropriate `config-{env).go` test file.
+Global configs should be placed in the `config.go` test file.  These are variables that can be shared across all environments.
+Environment specific variables can should be placed in the appropriate `config_{env).go` test file.
 
 ## Helper Methods
 There are two helper methods designed to help you conditionally skip test `OnlyIn()` and `SkipIn()` these are variadic functions that take zero or more environments as argument.
@@ -74,6 +74,6 @@ assuming env is the desired name of the new environment
 2) Update the config_local.go file
     - add !{env} to the list of excluded build tags
   
-3) Updates the environment enum in suite_test.go
+3) Updates the environment enum in config.go
     - add your {env} to the var block
     - be careful to also create a simple name for the String Method.

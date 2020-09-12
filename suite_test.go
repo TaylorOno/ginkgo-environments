@@ -17,19 +17,6 @@ func TestSuite(t *testing.T) {
 	RunSpecs(t, fmt.Sprintf("%v Tests Suite", env))
 }
 
-type environment int
-
-const (
-	PROD environment = iota
-	STAGING
-	DEV
-	LOCAL
-)
-
-func (e environment) String() string {
-	return [...]string{"PROD", "STAGING", "DEV", "LOCAL"}[e]
-}
-
 // SkipIn takes 1 or more environment parameters if the current environment matches the supplied environments the test will not be executed.
 // This method should be placed at the beginning of any test that needs to be excluded from running in specific environments
 func SkipIn(environments ...environment){
