@@ -2,6 +2,7 @@ package tests
 
 import (
 	"fmt"
+	"github.com/TaylorOno/ginkgo-environments/config"
 	. "github.com/onsi/ginkgo"
 )
 
@@ -12,24 +13,28 @@ var _ = Describe("Functional", func() {
 		})
 
 		It("Prints global variable", func(){
-			fmt.Println("this is a global variable: " + globalValue)
+			fmt.Println("this is a global variable: " + config.GlobalValue)
 		})
 
 		It("Prints environment specific variable", func(){
-			fmt.Println("this is a env variable: " + user)
+			fmt.Println("this is a env variable: " + config.User)
+		})
+
+		It("Prints secret specific variable", func(){
+			fmt.Println("this is a password: " + config.Password.Decrypt())
 		})
 
 		It("Skips Destructive Tests in PROD", func(){
-			SkipIn(PROD)
-			if env == PROD {
+			config.SkipIn(config.PROD)
+			if config.Env == config.PROD {
 				Fail(fmt.Sprintf("This will fail in prod"))
 			}
 			fmt.Println("this does not run in prod")
 		})
 
 		It("Runs Destructive Tests only in Local", func(){
-			OnlyIn(LOCAL)
-			if env != LOCAL {
+			config.OnlyIn(config.LOCAL)
+			if config.Env != config.LOCAL {
 				Fail(fmt.Sprintf("This will fail if not local"))
 			}
 		})
